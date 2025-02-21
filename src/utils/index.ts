@@ -176,3 +176,23 @@ export const getEnvBaseUploadUrl = () => {
 
   return baseUploadUrl
 }
+
+/**
+ * 是否存在浏览记录
+ */
+// 检测是否有浏览器历史
+export const hasHistory = () => {
+  // #ifndef H5
+  const pages = getCurrentPages()
+  if (pages.length > 1) {
+    return true
+  }
+  return false
+  // #endif
+}
+
+/**
+ * 获取当前页面配置信息
+ */
+export const getCurrPageInfo = () =>
+  getAllPages().find((page) => page.path.includes(getLastPage().route))

@@ -22,3 +22,45 @@ const PLATFORM = {
   isMpToutiao,
 }
 export default PLATFORM
+
+/**
+ * 设备信息获取、导航栏计算等工具函数
+ *
+ * 主要导出内容：
+ * - 设备信息对象（包含屏幕尺寸、安全区域等）
+ * - 导航栏高度计算工具函数
+ * - 胶囊按钮信息获取函数
+ */
+
+export const device = uni.getSystemInfoSync()
+
+export const getNavbar = () => {
+  const capsule = getCapsule()
+  const navigationBarHeight = (capsule.top - device.statusBarHeight) * 2 + capsule.height
+  return navigationBarHeight
+}
+
+export const getStatusBarHeight = () => {
+  return device.statusBarHeight
+}
+
+export const getSafeAreaInset = () => {
+  return device.safeAreaInsets
+}
+
+export const getCapsule = () => {
+  // #ifdef MP
+  let capsule = uni.getMenuButtonBoundingClientRect()
+  if (!capsule) {
+    capsule = {
+      bottom: 56,
+      height: 32,
+      left: 278,
+      right: 365,
+      top: 24,
+      width: 87,
+    }
+  }
+  return capsule
+  // #endif
+}
